@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.0'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.swmaestro'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation group: 'com.github.f4b6a3', name: 'tsid-creator', version: '5.2.6'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	runtimeOnly 'com.h2database:h2'
+
+	// aws
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.0")
+	// Replace the following with the starter dependencies of specific modules you wish to use
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
+	implementation group: 'software.amazon.awssdk', name: 'apache-client', version: '2.26.6'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
